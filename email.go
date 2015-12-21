@@ -33,7 +33,8 @@ func SendMail(subject string, message string, from string, to []string, smtpConf
 // exec /usr/sbin/sendmail -t -i
 func SendMailExec(subject string, message string, from string, to []string, sendmailPath string, isHtml bool) error {
 	cmdArgs := strings.Fields(sendmailPath)
-	cmd := exec.Command(cmdArgs[0], "-f", from, cmdArgs[1:]...)
+	cmdArgs = append(cmdArgs, "-f", from)
+	cmd := exec.Command(cmdArgs[0], cmdArgs[1:]...)
 	cmdStdin, err := cmd.StdinPipe()
 	if err != nil {
 		return err
